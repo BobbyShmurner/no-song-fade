@@ -10,5 +10,19 @@
 	"name": "No Song Fade",
 	"version": "v1.0.0",
 	"developer": "Bobby Shmurner",
-	"description": "Removes the song fade from levels!"
+	"description": "Removes the song fade from levels!",
+	"settings": {
+		"fadeIn": {
+			"type": "bool",
+			"name": "Allow Fade In",
+			"description": "If enabled, fading in won't be blocked.\nEnable for default game behavior.",
+			"default": true
+		},
+		"fadeOut": {
+			"type": "bool",
+			"name": "Allow Fade Out",
+			"description": "If enabled, fading out won't be blocked.\nEnable for default game behavior.",
+			"default": false
+		}
+	}
 }

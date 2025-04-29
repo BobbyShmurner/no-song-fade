@@ -9,8 +9,11 @@ public:
 	inline static bool allowFadeIn = true;
 	inline static bool allowFadeOut = true;
 
+	inline static bool allowFadeInSetting;
+	inline static bool allowFadeOutSetting;
+
 	void fadeInMusic(float fade_duration, int p1) {
-		if (!allowFadeIn) {
+		if (!allowFadeInSetting && !allowFadeIn) {
 			geode::log::info("Fade-in blocked");
 			return;
 		}
@@ -19,7 +22,7 @@ public:
 	}
 
 	void fadeOutMusic(float fade_duration, int p1) {
-		if (!allowFadeOut) {
+		if (!allowFadeOutSetting && !allowFadeOut) {
 			geode::log::info("Fade-out blocked");
 			return;
 		}
@@ -41,3 +44,15 @@ class $modify(PlayLayer) {
 		FMODAudioEngineFade::allowFadeOut = true;
 	}
 };
+
+$execute {
+	FMODAudioEngineFade::allowFadeInSetting = Mod::get()->getSettingValue<bool>("fadeIn");
+    listenForSettingChanges("fadeIn", [](bool value) {
+        FMODAudioEngineFade::allowFadeInSetting = value;
+    });
+	
+	FMODAudioEngineFade::allowFadeOutSetting = Mod::get()->getSettingValue<bool>("fadeOut");
+	listenForSettingChanges("fadeOut", [](bool value) {
+		FMODAudioEngineFade::allowFadeOutSetting = value;
+	});
+}
