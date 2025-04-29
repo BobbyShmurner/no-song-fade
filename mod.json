@@ -1,0 +1,14 @@
+{
+	"geode": "4.3.1",
+	"gd": {
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
+	},
+	"id": "bobby_shmurner.no_song_fade",
+	"name": "No Song Fade",
+	"version": "v1.0.0",
+	"developer": "Bobby Shmurner",
+	"description": "Removes the song fade from levels!"
+}
