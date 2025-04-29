@@ -10,7 +10,17 @@
 	"name": "No Song Fade",
 	"version": "v1.0.0",
 	"developer": "Bobby Shmurner",
-	"description": "Removes the song fade from levels!",
+	"description": "Lets you customize the song fade of levels!",
+	"tags": [
+		"customization",
+		"enhancement",
+		"offline",
+		"utility",
+		"music"
+	],
+	"links": {
+		"source": "https://github.com/BobbyShmurner/no-song-fade"
+	},
 	"settings": {
 		"fadeIn": {
 			"type": "bool",
