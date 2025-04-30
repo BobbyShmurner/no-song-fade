@@ -21,6 +21,11 @@
 	"links": {
 		"source": "https://github.com/BobbyShmurner/custom-song-fade"
 	},
+	"resources": {
+		"files": [
+			"resources/about/settings.png"
+		]
+	},
 	"settings": {
 		"fadeInTitle": {
 			"type": "title",
@@ -48,7 +53,7 @@
 			"name": "Fade Out Behavior",
 			"description": "Customise the fade out behavior.\n\n- Default: The default game behavior.\n- Never Fade Out: Fading out will be blocked.\n- Always Fade Out: Fading out will always happen.",
 			"one-of": ["Default", "Never Fade Out", "Always Fade Out"],
-			"default": "Never Fade Out"
+			"default": "Default"
 		}
 	}
 }
