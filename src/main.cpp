@@ -26,14 +26,14 @@ class $modify(PlayLayerFade, PlayLayer) {
 	inline static std::string fadeOutSetting;
 	inline static bool fadeInFromStartPosSetting;
 
+	// The second parameter is the fade seems inconsistent between platforms
+	// Passing 0 seems to be fine, so I'm gonna keep doing that until something breaks :)
 	void doFadeIn() {
-		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
-		engine->fadeInMusic(2, (int)engine);
+		FMODAudioEngine::sharedEngine()->fadeInMusic(2, 0);
 	}
 	
 	void doFadeOut() {
-		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
-		engine->fadeOutMusic(2, (int)engine);
+		FMODAudioEngine::sharedEngine()->fadeOutMusic(2, 0);
 	}
 
 	void startMusic() {

@@ -15,4 +15,4 @@ By default, this mod doesn't change any behaviour.
 
 To customize how songs fade in and out, head over to the settings and go wild!
 
-![Example Image: Mod's Settings Menu](bobby_shmurner.custom-song-fade/settings.png)
+![Image: Mod's Settings Menu](bobby_shmurner.custom-song-fade/settings.png)
