@@ -6,8 +6,8 @@
 		"mac": "2.2074",
 		"ios": "2.2074"
 	},
-	"id": "bobby_shmurner.no-song-fade",
-	"name": "No Song Fade",
+	"id": "bobby_shmurner.custom-song-fade",
+	"name": "Custom Song Fade",
 	"version": "v1.0.0",
 	"developer": "Bobby Shmurner",
 	"description": "Lets you customize the song fade of levels!",
@@ -19,7 +19,7 @@
 		"music"
 	],
 	"links": {
-		"source": "https://github.com/BobbyShmurner/no-song-fade"
+		"source": "https://github.com/BobbyShmurner/custom-song-fade"
 	},
 	"settings": {
 		"fadeInTitle": {

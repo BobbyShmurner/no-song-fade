@@ -8,7 +8,7 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 if ($platform -eq "windows") {
 	geode run
 } elseif ($platform -eq "android64") {
-	adb push $PSScriptRoot/build-android64/bobby_shmurner.no-song-fade.geode /storage/emulated/0/Android/media/com.geode.launcher/game/geode/mods/bobby_shmurner.no-song-fade.geode
+	adb push $PSScriptRoot/build-android64/bobby_shmurner.custom-song-fade.geode /storage/emulated/0/Android/media/com.geode.launcher/game/geode/mods/bobby_shmurner.custom-song-fade.geode
 	adb shell am force-stop com.geode.launcher
 	adb shell am start -D -n "com.geode.launcher/com.geode.launcher.MainActivity"
 
