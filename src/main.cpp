@@ -1,3 +1,4 @@
+#include "Geode/loader/Log.hpp"
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/FMODAudioEngine.hpp>
@@ -6,53 +7,87 @@ using namespace geode::prelude;
 
 class $modify(FMODAudioEngineFade, FMODAudioEngine) {
 public:
-	inline static bool allowFadeIn = true;
-	inline static bool allowFadeOut = true;
-
-	inline static bool allowFadeInSetting;
-	inline static bool allowFadeOutSetting;
+	inline static bool blockFadeIn = true;
+	inline static bool blockFadeOut = true;
 
 	void fadeInMusic(float fade_duration, int p1) {
-		if (!allowFadeInSetting && !allowFadeIn) {
-			geode::log::info("Fade-in blocked");
-			return;
-		}
-
+		if (blockFadeIn) return;
 		return FMODAudioEngine::fadeInMusic(fade_duration, p1);
 	}
 
 	void fadeOutMusic(float fade_duration, int p1) {
-		if (!allowFadeOutSetting && !allowFadeOut) {
-			geode::log::info("Fade-out blocked");
-			return;
-		}
-		
+		if (blockFadeOut) return;
 		return FMODAudioEngine::fadeOutMusic(fade_duration, p1);
 	}
 };
 
-class $modify(PlayLayer) {
+class $modify(PlayLayerFade, PlayLayer) {
+	inline static std::string fadeInSetting;
+	inline static std::string fadeOutSetting;
+	inline static bool fadeInFromStartPosSetting;
+
+	void doFadeIn() {
+		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
+		engine->fadeInMusic(2, (int)engine);
+	}
+	
+	void doFadeOut() {
+		FMODAudioEngine* engine = FMODAudioEngine::sharedEngine();
+		engine->fadeOutMusic(2, (int)engine);
+	}
+
 	void startMusic() {
-		FMODAudioEngineFade::allowFadeIn = false;
+		FMODAudioEngineFade::blockFadeIn = true;
 		PlayLayer::startMusic();
-		FMODAudioEngineFade::allowFadeIn = true;
+		FMODAudioEngineFade::blockFadeIn = false;
+
+		bool startOfLevel = m_gameState.m_levelTime <= 0.0;
+		bool allowFadeBasedOnTime = startOfLevel || fadeInFromStartPosSetting;
+
+		if (fadeInSetting == "Never Fade In") {
+			geode::log::info("Blocking fade in");
+		} else if (fadeInSetting == "Always Fade In" && allowFadeBasedOnTime) {
+			geode::log::info("Forcing fade in");
+			doFadeIn();
+		} else {
+			if (allowFadeBasedOnTime && m_levelSettings->m_fadeIn) {
+				doFadeIn();
+			}
+		}
 	}
 
 	void showCompleteEffect() {
-		FMODAudioEngineFade::allowFadeOut = false;
+		FMODAudioEngineFade::blockFadeOut = true;
 		PlayLayer::showCompleteEffect();
-		FMODAudioEngineFade::allowFadeOut = true;
+		FMODAudioEngineFade::blockFadeOut = false;
+
+		if (fadeOutSetting == "Never Fade Out") {
+			geode::log::info("Blocking fade out");
+		} else if (fadeOutSetting == "Always Fade Out") {
+			geode::log::info("Forcing fade out");
+			doFadeOut();
+		} else {
+			// Most legendery check of all time
+			if (m_levelSettings->m_fadeOut || (int)m_level->m_levelID == 3001) {
+				doFadeOut();
+			}
+		}
 	}
 };
 
 $execute {
-	FMODAudioEngineFade::allowFadeInSetting = Mod::get()->getSettingValue<bool>("fadeIn");
-    listenForSettingChanges("fadeIn", [](bool value) {
-        FMODAudioEngineFade::allowFadeInSetting = value;
+	PlayLayerFade::fadeInSetting = Mod::get()->getSettingValue<std::string>("fadeIn");
+    listenForSettingChanges("fadeIn", [](std::string value) {
+        PlayLayerFade::fadeInSetting = value;
     });
 	
-	FMODAudioEngineFade::allowFadeOutSetting = Mod::get()->getSettingValue<bool>("fadeOut");
-	listenForSettingChanges("fadeOut", [](bool value) {
-		FMODAudioEngineFade::allowFadeOutSetting = value;
+	PlayLayerFade::fadeOutSetting = Mod::get()->getSettingValue<std::string>("fadeOut");
+	listenForSettingChanges("fadeOut", [](std::string value) {
+		PlayLayerFade::fadeOutSetting = value;
 	});
+
+	PlayLayerFade::fadeInFromStartPosSetting = Mod::get()->getSettingValue<bool>("fadeInFromStartPos");
+    listenForSettingChanges("fadeInFromStartPos", [](bool value) {
+        PlayLayerFade::fadeInFromStartPosSetting = value;
+    });
 }

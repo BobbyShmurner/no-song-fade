@@ -22,17 +22,33 @@
 		"source": "https://github.com/BobbyShmurner/no-song-fade"
 	},
 	"settings": {
+		"fadeInTitle": {
+			"type": "title",
+			"name": "Fade In"
+		},
 		"fadeIn": {
+			"type": "string",
+			"name": "Fade In Behavior",
+			"description": "Customise the fade in behavior.\n\n- Default: The default game behavior.\n- Never Fade In: Fading in will be blocked.\n- Always Fade In: Fading in will always happen.",
+			"one-of": ["Default", "Never Fade In", "Always Fade In"],
+			"default": "Default"
+		},
+		"fadeInFromStartPos": {
 			"type": "bool",
-			"name": "Allow Fade In",
-			"description": "If enabled, fading in won't be blocked.\nEnable for default game behavior.",
-			"default": true
+			"name": "Fade In From Start Position",
+			"description": "If enabled, music will also fade in when starting from Start Positions.\nFade in from a Start Position also follows the Fade In Behavior.",
+			"default": false
+		},
+		"fadeOutTitle": {
+			"type": "title",
+			"name": "Fade Out"
 		},
 		"fadeOut": {
-			"type": "bool",
-			"name": "Allow Fade Out",
-			"description": "If enabled, fading out won't be blocked.\nEnable for default game behavior.",
-			"default": false
+			"type": "string",
+			"name": "Fade Out Behavior",
+			"description": "Customise the fade out behavior.\n\n- Default: The default game behavior.\n- Never Fade Out: Fading out will be blocked.\n- Always Fade Out: Fading out will always happen.",
+			"one-of": ["Default", "Never Fade Out", "Always Fade Out"],
+			"default": "Never Fade Out"
 		}
 	}
 }
