@@ -1,4 +1,3 @@
-#include "Geode/loader/Log.hpp"
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/FMODAudioEngine.hpp>
 
@@ -44,9 +43,9 @@ class $modify(PlayLayerFade, PlayLayer) {
 		bool allowFadeBasedOnTime = startOfLevel || fadeInFromStartPosSetting;
 
 		if (fadeInSetting == "Never Fade In") {
-			geode::log::info("Blocking fade in");
+			log::info("Blocking fade in");
 		} else if (fadeInSetting == "Always Fade In" && allowFadeBasedOnTime) {
-			geode::log::info("Forcing fade in");
+			log::info("Forcing fade in");
 			doFadeIn();
 		} else {
 			if (allowFadeBasedOnTime && m_levelSettings->m_fadeIn) {
@@ -61,9 +60,9 @@ class $modify(PlayLayerFade, PlayLayer) {
 		FMODAudioEngineFade::blockFadeOut = false;
 
 		if (fadeOutSetting == "Never Fade Out") {
-			geode::log::info("Blocking fade out");
+			log::info("Blocking fade out");
 		} else if (fadeOutSetting == "Always Fade Out") {
-			geode::log::info("Forcing fade out");
+			log::info("Forcing fade out");
 			doFadeOut();
 		} else {
 			// Most legendery check of all time
