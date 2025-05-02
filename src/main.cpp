@@ -1,5 +1,4 @@
 #include "Geode/loader/Log.hpp"
-#include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/FMODAudioEngine.hpp>
 
@@ -11,12 +10,12 @@ public:
 	inline static bool blockFadeOut = true;
 
 	void fadeInMusic(float fade_duration, int p1) {
-		if (blockFadeIn) return;
+		if (blockFadeIn && PlayLayer::get()) return;
 		return FMODAudioEngine::fadeInMusic(fade_duration, p1);
 	}
 
 	void fadeOutMusic(float fade_duration, int p1) {
-		if (blockFadeOut) return;
+		if (blockFadeOut && PlayLayer::get()) return;
 		return FMODAudioEngine::fadeOutMusic(fade_duration, p1);
 	}
 };
@@ -68,14 +67,14 @@ class $modify(PlayLayerFade, PlayLayer) {
 			doFadeOut();
 		} else {
 			// Most legendery check of all time
-			if (m_levelSettings->m_fadeOut || (int)m_level->m_levelID == 3001) {
+			if (m_levelSettings->m_fadeOut || m_level->m_levelID.value() == 3001) {
 				doFadeOut();
 			}
 		}
 	}
 };
 
-$execute {
+$on_mod(Loaded) {
 	PlayLayerFade::fadeInSetting = Mod::get()->getSettingValue<std::string>("fadeIn");
     listenForSettingChanges("fadeIn", [](std::string value) {
         PlayLayerFade::fadeInSetting = value;
