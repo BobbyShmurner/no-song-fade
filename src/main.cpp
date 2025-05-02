@@ -6,16 +6,16 @@ using namespace geode::prelude;
 
 class $modify(FMODAudioEngineFade, FMODAudioEngine) {
 public:
-	inline static bool blockFadeIn = true;
-	inline static bool blockFadeOut = true;
+	inline static bool blockFadeIn = false;
+	inline static bool blockFadeOut = false;
 
 	void fadeInMusic(float fade_duration, int p1) {
-		if (blockFadeIn && PlayLayer::get()) return;
+		if (blockFadeIn) return;
 		return FMODAudioEngine::fadeInMusic(fade_duration, p1);
 	}
 
 	void fadeOutMusic(float fade_duration, int p1) {
-		if (blockFadeOut && PlayLayer::get()) return;
+		if (blockFadeOut) return;
 		return FMODAudioEngine::fadeOutMusic(fade_duration, p1);
 	}
 };
@@ -71,6 +71,12 @@ class $modify(PlayLayerFade, PlayLayer) {
 				doFadeOut();
 			}
 		}
+	}
+
+	void onQuit() {
+		FMODAudioEngineFade::blockFadeIn = false;
+		FMODAudioEngineFade::blockFadeOut = false;
+		PlayLayer::onQuit();
 	}
 };
 
