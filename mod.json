@@ -1,5 +1,5 @@
 {
-	"geode": "4.3.1",
+	"geode": "4.4.0",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
@@ -8,7 +8,7 @@
 	},
 	"id": "bobby_shmurner.custom-song-fade",
 	"name": "Custom Song Fade",
-	"version": "v1.0.1",
+	"version": "v1.0.2",
 	"developer": "Bobby Shmurner",
 	"description": "Lets you customize the song fade of levels!",
 	"tags": [
